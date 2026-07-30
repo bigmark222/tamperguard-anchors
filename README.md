@@ -27,6 +27,19 @@ exactly one place: a password manager on the same machine being audited.
 Now it lives in three: password manager, paper, and here — where it is append-only and
 off-machine.
 
+## The first row is a TEST — do not match it against the medium
+
+The row noted `simulated bootstrap` (2026-07-30) was produced while building
+`anchor-publish.sh`, against a **simulated** medium in a scratch directory — not against
+real hardware. Its anchors correspond to nothing you own.
+
+It is still here because this log is append-only and force-push-protected, which is the
+whole point: **not even I can quietly remove an inconvenient row.** That is the property
+being demonstrated, so the row stays and this note explains it.
+
+The first genuine row will carry the note `bootstrap` and will follow the first real
+promote to physical media.
+
 ## Format
 
 `anchors.tsv`, one row per promote, tab-separated:
