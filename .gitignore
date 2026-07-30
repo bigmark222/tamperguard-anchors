@@ -1,0 +1,16 @@
+# `ots upgrade` renames the old proof to <file>.ots.bak in place. That file is a
+# strict subset of the upgraded proof and has no value once the upgrade succeeds,
+# but it IS an untracked file in a repo whose publisher only stages a fixed
+# pathspec — and on 2026-07-30 that combination wedged anchor-publish.sh into
+# "commit failed" on every run, with the anchor row sitting undelivered on disk.
+#
+# The publisher no longer depends on this file (its gate is scoped to the same
+# pathspec as its add, so an untracked file elsewhere is simply invisible). This
+# is belt-and-braces plus a place to record why the .bak appears at all.
+*.bak
+
+# Nothing else belongs here. This repo is PUBLIC on purpose — branch protection is
+# free on public repos and paid on private ones — and it holds hashes only, which
+# disclose nothing. Anything that is not a hash or a timestamp is a mistake, and
+# because the branch is protected and append-only it is a mistake that cannot be
+# taken back. Do not add ignore rules to make room for new file types here.
