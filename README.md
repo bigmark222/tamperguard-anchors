@@ -7,11 +7,25 @@ file-manifest reveal nothing about their contents. It is public on purpose.
 
 ## Why public
 
-Branch protection on private repositories requires a paid GitHub plan; on public ones it
-is free. Public therefore buys **force-push blocked, deletions blocked, and required
-signed commits** at no cost — which is the entire point. An attacker holding the machine
-*and* the medium still cannot rewrite this history; they could at most append to it, and
-appends are visible.
+Branch protection on public repositories is free, and this repo has it: **force-push
+blocked, deletions blocked, `enforce_admins` on, signed commits required.**
+
+**Corrected 2026-07-31 — the original wording here was too strong.** It said an attacker
+holding the machine *and* the medium "still cannot rewrite this history". That is not
+true, and the difference matters in a file people may rely on. Branch protection blocks
+force-push even for the owner — measured: `remote: - Cannot force-push to this branch` —
+but an admin can *remove the protection first*. `DELETE .../branches/main/protection`
+returns `204` even with `enforce_admins` set, because that flag governs who the **rules
+bind**, not who may **edit them**.
+
+So this log raises the cost of a rewrite from one operation to three — disable, rewrite,
+re-enable — and each of those is a visible account action. It is a strong deterrent and an
+excellent record. It is **not** a guarantee against someone holding the machine's
+credentials.
+
+What genuinely cannot be rewritten by anyone is the OpenTimestamps proofs alongside each
+row: those commit these hashes into Bitcoin, and rewriting that requires rewriting Bitcoin.
+That is the part of this repo to lean on if you need certainty rather than deterrence.
 
 The cost is metadata: this reveals that the machine runs tamper detection, and how often
 it is promoted. That is an acceptable trade for an append-only witness, and secrecy about
